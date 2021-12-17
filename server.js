@@ -5,7 +5,6 @@ const {bots, playerRecord} = require('./data')
 const {shuffleArray} = require('./utils')
 
 
-
 // include and initialize the rollbar library with your access token
 var Rollbar = require('rollbar')
 var rollbar = new Rollbar({
@@ -13,9 +12,14 @@ var rollbar = new Rollbar({
   captureUncaught: true,
   captureUnhandledRejections: true,
 })
-
 // record a generic message and send it to Rollbar
 rollbar.log('Hello world!')
+
+rollbar.global({itemsPerMinute: 5});
+rollbar.global({maxItems: 10});
+rollbar.configure({uncaughtErrorLevel: 'warning'});
+rollbar.configure({endpoint: 'https://api.rollbar.com/api/1/item'});
+rollbar.configure({sendConfig: true});
 
 app.use(express.json())
 
@@ -91,7 +95,11 @@ app.get('/api/player', (req, res) => {
     }
 })
 
+
+
 const port = process.env.PORT || 3000
+
+app.use(rollbar.errorHandler())
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`)
