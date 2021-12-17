@@ -20,11 +20,6 @@ rollbar.global({maxItems: 10});
 rollbar.configure({uncaughtErrorLevel: 'warning'});
 rollbar.configure({endpoint: 'https://api.rollbar.com/api/1/item'});
 rollbar.configure({sendConfig: true});
-rollbar.debug("Response time exceeded threshold of 1s", request, callback);
-rollbar.info("Response time exceeded threshold of 1s", request, callback);
-rollbar.warning("Response time exceeded threshold of 1s", request, callback);
-rollbar.error("Response time exceeded threshold of 1s", request, callback);
-rollbar.critical("Response time exceeded threshold of 1s", request, callback);
 
 app.use(express.json())
 
